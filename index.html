@@ -6,19 +6,85 @@
   <meta name="description" content="Humanity's message to the deep future">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #000; color: #fff; text-align: center; padding: 60px; line-height: 1.6; }
-    h1 { font-size: 4rem; margin: 0; background: linear-gradient(90deg, #ff6ec4, #7873f5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .vault { max-width: 800px; margin: 40px auto; }
-    a { color: #7873f5; }
+    body, html { margin:0; padding:0; height:100%; overflow:hidden; background:#000; }
+    canvas { position:fixed; top:0; left:0; width:100%; height:100%; }
+    
+    .stars { position:fixed; inset:0; background:transparent; pointer-events:none; }
+    
+    .content {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 10;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 5rem;
+      margin: 0 0 20px 0;
+      background: linear-gradient(90deg, #ff6ec4, #7873f5, #8bffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(120, 115, 245, 0.6);
+    }
+    p { font-size: 1.4rem; margin: 15px 0; opacity: 0.95; }
+    a { color: #7873f5; text-decoration: none; border-bottom: 1px solid; }
+    a:hover { color: #8bffff; }
   </style>
 </head>
 <body>
-  <div class="vault">
+
+  <canvas class="stars"></canvas>
+
+  <div class="content">
     <h1>THE COSMIC VAULT</h1>
     <p>A message in a bottle for the far future.<br>
     Sealed in sapphire, buried on the Moon, etched into diamonds, broadcast into the void.</p>
     <p><strong>This vault is designed to outlast humanity by millions – perhaps billions – of years.</strong></p>
     <p><a href="https://github.com/0728george/cosmic-vault" target="_blank">View on GitHub →</a></p>
   </div>
+
+  <script>
+    const canvas = document.querySelector('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const stars = [];
+    for(let i = 0; i < 800; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2.5,
+        speed: Math.random() * 0.3 + 0.05,
+        brightness: Math.random() * 0.8 + 0.2
+      });
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(0,0,0,0.07)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      
+      stars.forEach(s => {
+        ctx.fillStyle = `rgba(255,255,255,${s.brightness})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+        ctx.fill();
+        
+        s.y += s.speed;
+        if(s.y > canvas.height) s.y = 0;
+      });
+      
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
 </body>
 </html>
