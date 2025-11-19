@@ -14,15 +14,7 @@ export default function Background() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const stars: Array<{
-      x: number;
-      y: number;
-      size: number;
-      brightness: number;
-      vx: number;
-      vy: number;
-      glow: boolean;
-    }> = [];
+    const stars: Array<{x:number,y:number,size:number,vx:number,vy:number,brightness:number,glow:boolean}> = [];
 
     for (let i = 0; i < 180; i++) {
       const b = Math.random() * 0.4 + 0.05;
