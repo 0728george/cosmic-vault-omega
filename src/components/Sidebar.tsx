@@ -4,24 +4,23 @@ const tabs = [
   { name: "Home", href: "/", icon: "🏠" },
   { name: "About", href: "/about", icon: "ℹ️" },
   { name: "Manifesto", href: "/manifesto", icon: "📜" },
-  { name: "Archive", href: "/archive", icon: "📦" },
 ];
 
 export default function Sidebar() {
   return (
-    <div className="fixed left-6 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-20">
+    <aside className="fixed left-8 top-1/2 -translate-y-1/2 flex flex-col gap-6 z-50">
       {tabs.map((tab) => (
         <Link
           key={tab.name}
           href={tab.href}
-          className="group flex items-center gap-3 text-gray-500 hover:text-cyan-400 transition text-sm"
+          className="group flex items-center gap-4 text-3xl text-gray-600 hover:text-cyan-400 transition"
         >
-          <span className="text-2xl">{tab.icon}</span>
-          <span className="opacity-0 group-hover:opacity-100 transition">
+          <span>{tab.icon}</span>
+          <span className="text-sm opacity-0 group-hover:opacity-100 transition">
             {tab.name}
           </span>
         </Link>
       ))}
-    </div>
+    </aside>
   );
 }
