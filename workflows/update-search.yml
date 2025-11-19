@@ -1,0 +1,32 @@
+name: Update Search Index
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate search-index.json
+        run: |
+          node -e "
+          const fs = require('fs');
+          const path = require('path');
+          const pages = [];
+          const dir = './pages';
+          fs.readdirSync(dir).forEach(file => {
+            if (file.endsWith('.html')) {
+              const content = fs.readFileSync(path.join(dir, file), 'utf8');
+              const titleMatch = content.match(/<title>(.*?)<\/title>/) || ['', file];
+              pages.push({
+                title: titleMatch[1],
+                url: `pages/${file}`,
+                description: content.split('</h1>')[1]?.slice(0,200) || '',
+                keywords: '',
+                content: content.replace(/<[^>]*>/g, ' ').slice(0,10000)
+              });
+            }
+          });
+          fs.writeFileSync('data/search-index.json', JSON.stringify(pages, null, 2));
+          "
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update search index"
