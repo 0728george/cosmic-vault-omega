@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Background from "@/components/Background";
+import Background from "../components/Background";
 
 export const metadata: Metadata = {
   title: "The Cosmic Vault",
