@@ -11,61 +11,59 @@ export default function Background() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    let time = 0;
+    const stars: { x: number; y: number; size: number; brightness: number }[] = [];
 
-    const stars: Array<{x:number,y:number,size:number,vx:number,vy:number,brightness:number,glow:boolean}> = [];
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
 
+    // Generate faint distant stars
     for (let i = 0; i < 180; i++) {
-      const b = Math.random() * 0.4 + 0.05;
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 1.2 + 0.3,
-        vx: (Math.random() - 0.5) * 0.03,
-        vy: (Math.random() - 0.5) * 0.03,
-        brightness: b,
-        glow: b > 0.35,
+        size: Math.random() * 1.2 + 0.2,
+        brightness: Math.random() * 0.4 + 0.1,
       });
     }
 
     const animate = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.02)";
+      time += 0.001;
+
+      // Very slow rotating nebula glow
+      const gradient = ctx.createRadialGradient(
+        canvas.width / 2 + Math.cos(time) * 300,
+        canvas.height / 2 + Math.sin(time) * 300,
+        0,
+        canvas.width / 2,
+        canvas.height / 2,
+        800
+      );
+      gradient.addColorStop(0, "rgba(10, 0, 30, 0.06)");
+      gradient.addColorStop(1, "rgba(0, 0, 15, 0)");
+
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      // Draw faint stars
       stars.forEach((s) => {
-        ctx.fillStyle = `rgba(220,230,255,${s.brightness})`;
+        const twinkle = Math.sin(time * 10 + s.x) * 0.1 + 0.9;
+        ctx.fillStyle = `rgba(220, 220, 255, ${s.brightness * twinkle})`;
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
         ctx.fill();
-
-        if (s.glow) {
-          const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 12);
-          g.addColorStop(0, `rgba(180,200,255,${s.brightness * 0.6})`);
-          g.addColorStop(1, "rgba(180,200,255,0)");
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.size * 12, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        s.x += s.vx;
-        s.y += s.vy;
-        if (s.x < 0) s.x = canvas.width;
-        if (s.x > canvas.width) s.x = 0;
-        if (s.y < 0) s.y = canvas.height;
-        if (s.y > canvas.height) s.y = 0;
       });
 
       requestAnimationFrame(animate);
     };
     animate();
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
   }, []);
 
