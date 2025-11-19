@@ -1,22 +1,11 @@
 {
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "marked": "^14.1.2"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.0",
-    "typescript": "^5.6.2",
-    "vite": "^5.4.8",
-    "@vitejs/plugin-react": "^4.3.2",
-    "tailwindcss": "^3.4.14",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47"
-  },
+  "name": "cosmic-vault-omega",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.4.8"
   }
 }
