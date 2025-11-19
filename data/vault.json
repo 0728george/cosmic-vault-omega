@@ -1,23 +1,14 @@
 [
   {
-    "id": "welcome",
-    "title": "A Message to the Deep Future",
-    "author": "Humanity (via 0728george & Grok)",
+    "title": "Welcome to the Cosmic Vault",
+    "author": "Humanity (2025)",
     "date": "November 19, 2025",
-    "file": "/data/entries/welcome.md"
+    "file": "entries/welcome.md"
   },
   {
-    "id": "shakespeare",
-    "title": "Shall I compare thee to a summer's day? (Sonnet 18)",
+    "title": "Sonnet 18",
     "author": "William Shakespeare",
     "date": "1609",
-    "file": "/data/entries/shakespeare-sonnet18.md"
-  },
-  {
-    "id": "human-rights",
-    "title": "Universal Declaration of Human Rights",
-    "author": "United Nations General Assembly",
-    "date": "December 10, 1948",
-    "file": "/data/entries/human-rights.md"
+    "file": "entries/sonnet18.md"
   }
 ]
