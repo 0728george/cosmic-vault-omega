@@ -1,0 +1,26 @@
+# wrangler.toml
+# This file makes Cloudflare Pages build and serve your Cosmic Vault perfectly
+
+name = "cosmic-vault-omega"
+compatibility_date = "2025-11-19"
+
+# ==== BUILD CONFIGURATION ====
+# This is exactly what "npm run build" does in your package.json
+[build]
+command = "npm ci && npm run build"   # npm ci = clean install (faster & safer on Cloudflare)
+
+# ==== OUTPUT DIRECTORY ====
+# Vite (with your current settings) always outputs to ./dist
+[site]
+bucket = "./dist"
+
+# ==== SINGLE-PAGE APP BEHAVIOR ====
+# Makes any route (like /entry/42 or /about) serve index.html so your app can handle it
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+# Optional but nice: force HTTPS and modern security headers
+[vars]
+NPM_CONFIG_UPDATE_NOTIFIER = "false"   # silences a harmless warning during build
