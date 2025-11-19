@@ -3,7 +3,6 @@ import Link from "next/link";
 const tabs = [
   { name: "Home", href: "/", icon: "🏠" },
   { name: "About", href: "/about", icon: "ℹ️" },
-  { name: "Manifesto", href: "/manifesto", icon: "📜" },
 ];
 
 export default function Sidebar() {
